@@ -1,55 +1,183 @@
 # Camille, Divisia, 20119289
-# Prénom, Nom, Matricule
+# Patrick, Lanoie, 20212654
 
 import math
 import random
 import copy
 
+
 class LinkedList:
     class _Node:
-        def __init__(self, v, n):
+        def __init__(self, v, n):   # Constructeur Node
             self.value = v
             self.next = n
 
-    def __init__(self):
+    def __init__(self):             # Constructeur LinkedList
         self._head = None
         self._size = 0
 
     def __str__(self):
         #TO DO
-        pass
+
+        # EC : liste vide
+        if self._size == 0:
+            return ""
+        
+        # NC
+        result = ""
+        current = self._head
+
+        while current != None:
+            result += str(current.value) + '->'
+            current = current.next
+        
+        return result
+
 
     def __len__(self):
         return self._size
 
+
     def isEmpty(self):
         #TO DO
-        pass
+        return self._size == 0
+
+
+    def emptyListCheck(self):
+        if self.isEmpty():
+            raise RuntimeError("Oh no! The list is empty :(")
+
 
     # Adds a node of value v to the beginning of the list
     def add(self, v):
-        #TO DO
-        pass
+        # TO DO
+
+        # EC : Liste vide 
+        if self._size == 0:
+            self._head = self._Node(v, None)
+        
+        # NC
+        else:
+            newNode = self._Node(v, self._head)
+            self._head = newNode
+        
+        self._size += 1
+
 
     # Adds a node of value v to the end of the list
     def append(self,v):
         #TO DO
-        pass
+        
+        # EC : Liste vide 
+        if self._size == 0:
+            self.add(v)
+        
+        # NC
+        else:
+            current = self._head
 
+            while current.next != None:
+                current = current.next
+
+            current.next = self._Node(v, None)
+        
+        self._size += 1
+
+        
     # Removes and returns the first node of the list
     def pop(self):
         #TO DO
-        pass
+        # EC : Liste vide
+        self.emptyListCheck()
+
+        # NC
+        first = self._head
+        self._head = first.next
+
+        self._size -= 1
+        return first
+
 
     # Returns the value of the first node of the list
     def peek(self):
         #TO DO
-        pass
+        # EC : Liste vide     À voir si on veut cette erreur ou retourner 0, -1 ... 
+        self.emptyListCheck()
+
+        # NC
+        return self._head.value
+        
 
     # Removes the first node of the list with value v and return v
     def remove(self, v):
-        #TO DO
-        pass
+        # TO DO
+
+        # EC : Liste vide     À voir si on veut cette erreur ou retourner 0, -1 ... 
+        self.emptyListCheck()
+        
+        # NC
+        current = self._head
+
+        # EC : Match premier node 
+        if current.value == v:  
+            self._head = current.next
+
+        # Nodes suivants 
+        else:   
+            prev = current
+            current = current.next
+
+            while current != None:
+                if current.value == v:
+                    prev.next = current.next
+                    break
+                prev = current
+                current = current.next
+        
+        # Trouvé
+        if current != None:
+            self._size -= 1
+            return current.value
+        # Pas trouvé 
+        else:
+            return -1  
+
+################# TESTS ######################################################
+
+listeV = LinkedList()
+liste1 = LinkedList()
+listeP = LinkedList()
+
+# Op sur liste vide
+print(listeV)
+#listeV.pop()
+#listeV.peek()
+#listeV.remove(1)
+listeV.append(2)
+#listeV.add(1)
+print(listeV)
+
+# Op sur liste 1 élément
+liste1.append(1)
+print(liste1.peek())
+liste1.pop()
+print(liste1)
+
+for i in range(10):
+    listeP.append(i)
+
+print(listeP)
+listeP.add(42)
+print(listeP.peek())
+listeP.pop()
+listeP.remove(0)
+listeP.remove(9)
+listeP.remove(7)
+print(listeP.remove(99))
+listeP.add(42)
+print(listeP)
+
+##############################################################################
 
 class CircularLinkedList(LinkedList):
     def __init__(self):
