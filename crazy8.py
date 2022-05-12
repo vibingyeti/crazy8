@@ -1,4 +1,4 @@
-# Prénom, Nom, Matricule
+# Camille, Divisia, 20119289
 # Prénom, Nom, Matricule
 
 import math
