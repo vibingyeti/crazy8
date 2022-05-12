@@ -31,7 +31,7 @@ class LinkedList:
             result += str(current.value) + '->'
             current = current.next
         
-        return result
+        return result[:-2]      # Slice pour éliminer dernière flêche, différencier de liste circulaire
 
 
     def __len__(self):
@@ -185,21 +185,41 @@ class CircularLinkedList(LinkedList):
     
     def __str__(self):
         #TO DO
-        pass
+
+        # EC : liste vide
+        if self._size == 0:
+            return ""
+        
+        # NC
+        result = ""
+        current = self._head
+
+        for i in range (self._size):
+            result += str(current.value) + '->'
+            current = current.next
+        
+        return result
 
     def __iter__(self):
-        #TO DO
+        #TO DO              ????
         pass
 
     # Moves head pointer to next node in list
     def next(self):
         #TO DO
-        pass
+        self._head = self._head.next
 
     # Adds a node of value v to the end of the list
     def append(self, v):
         #TO DO
-        pass
+
+        # EC : Liste vide 
+        if self._size == 0:
+            self._head = self._Node(v, None)
+            self._head.next = self._head        # Circulaire
+
+        # NC
+        
 
     # Reverses the next pointers of all nodes to previous node
     def reverse(self):
@@ -210,6 +230,45 @@ class CircularLinkedList(LinkedList):
     def pop(self):
         #TO DO
         pass
+
+################# TESTS ######################################################
+
+listeV = LinkedList()
+liste1 = LinkedList()
+listeP = LinkedList()
+
+# Op sur liste vide
+print(listeV)
+#listeV.pop()
+#listeV.peek()
+#listeV.remove(1)
+listeV.append(2)
+#listeV.add(1)
+print(listeV)
+
+# Op sur liste 1 élément
+liste1.append(1)
+print(liste1.peek())
+liste1.pop()
+print(liste1)
+
+for i in range(10):
+    listeP.append(i)
+
+print(listeP)
+listeP.add(42)
+print(listeP.peek())
+listeP.pop()
+listeP.remove(0)
+listeP.remove(9)
+listeP.remove(7)
+print(listeP.remove(99))
+listeP.add(42)
+print(listeP)
+
+##############################################################################
+
+
 
 class Card:
     def __init__(self, r, s):
