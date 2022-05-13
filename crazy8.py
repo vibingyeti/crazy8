@@ -5,51 +5,150 @@ import math
 import random
 import copy
 
+# Camille, Divisia, 20119289
+# Patrick, Lanoie, 20212654
+
+import math
+import random
+import copy
+
+
+
 class LinkedList:
     class _Node:
-        def __init__(self, v, n):
+        def __init__(self, v, n):   # Constructeur Node
             self.value = v
             self.next = n
 
-    def __init__(self):
+    def __init__(self):             # Constructeur LinkedList
         self._head = None
         self._size = 0
 
     def __str__(self):
         #TO DO
-        pass
+
+        # EC : liste vide
+        if self._size == 0:
+            return ""
+        
+        # NC
+        result = ""
+        current = self._head
+
+        while current != None:
+            result += str(current.value) + '->'
+            current = current.next
+        
+        return result[:-2]      # Slice pour éliminer dernière flêche, différencier de liste circulaire
+
 
     def __len__(self):
         return self._size
 
+
     def isEmpty(self):
         #TO DO
-        pass
+        return self._size == 0
+
+
+    def emptyListCheck(self):
+        if self.isEmpty():
+            raise RuntimeError("Oh no! The list is empty :(")
+
 
     # Adds a node of value v to the beginning of the list
     def add(self, v):
-        #TO DO
-        pass
+        # TO DO
+
+        # EC : Liste vide 
+        if self._size == 0:
+            self._head = self._Node(v, None)
+        
+        # NC
+        else:
+            newNode = self._Node(v, self._head)
+            self._head = newNode
+        
+        self._size += 1
+
 
     # Adds a node of value v to the end of the list
     def append(self,v):
         #TO DO
-        pass
+        
+        # EC : Liste vide 
+        if self._size == 0:
+            self.add(v)
+        
+        # NC
+        else:
+            current = self._head
 
+            while current.next != None:
+                current = current.next
+
+            current.next = self._Node(v, None)
+        
+        self._size += 1
+
+        
     # Removes and returns the first node of the list
     def pop(self):
         #TO DO
-        pass
+        # EC : Liste vide
+        self.emptyListCheck()
+
+        # NC
+        first = self._head
+        self._head = first.next
+
+        self._size -= 1
+        return first
+
 
     # Returns the value of the first node of the list
     def peek(self):
         #TO DO
-        pass
+        # EC : Liste vide     À voir si on veut cette erreur ou retourner 0, -1 ... 
+        self.emptyListCheck()
+
+        # NC
+        return self._head.value
+        
 
     # Removes the first node of the list with value v and return v
     def remove(self, v):
-        #TO DO
-        pass
+        # TO DO
+
+        # EC : Liste vide     À voir si on veut cette erreur ou retourner 0, -1 ... 
+        self.emptyListCheck()
+        
+        # NC
+        current = self._head
+
+        # EC : Match premier node 
+        if current.value == v:  
+            self._head = current.next
+
+        # Nodes suivants 
+        else:   
+            prev = current
+            current = current.next
+
+            while current != None:
+                if current.value == v:
+                    prev.next = current.next
+                    break
+                prev = current
+                current = current.next
+        
+        # Trouvé
+        if current != None:
+            self._size -= 1
+            return current.value
+        # Pas trouvé 
+        else:
+            return -1
 
 class CircularLinkedList(LinkedList):
     def __init__(self):
@@ -57,31 +156,93 @@ class CircularLinkedList(LinkedList):
     
     def __str__(self):
         #TO DO
-        pass
+
+        # EC : liste vide
+        if self._size == 0:
+            return ""
+        
+        # NC
+        result = ""
+        current = self._head
+
+        for i in range (self._size):
+            result += str(current.value) + '->'
+            current = current.next
+        
+        return result
 
     def __iter__(self):
-        #TO DO
+        #TO DO              ????
         pass
 
     # Moves head pointer to next node in list
     def next(self):
         #TO DO
-        pass
+        self._head = self._head.next
 
     # Adds a node of value v to the end of the list
     def append(self, v):
         #TO DO
-        pass
+
+        # EC : Liste vide 
+        if self._size == 0:
+            self._head = self._Node(v, None)
+            self._head.next = self._head        # Circulaire
+
+        # NC
+        else: 
+            current = self._head
+
+            for i in range (self._size - 1): 
+                current = current.next
+            
+            current.next = self._Node(v, self._head)
+
+        self._size += 1
+
 
     # Reverses the next pointers of all nodes to previous node
     def reverse(self):
         #TO DO
-        pass
+
+        # EC : Liste vide ou 1 élément = aucun changement 
+        if self._size <= 1:
+            pass
+
+        # NC 
+        current = self._head
+        first = current
+
+        # EC : Premier noeud 
+        
+        for i in range(self._size): 
+
+
 
     # Removes head node and returns its value
     def pop(self):
         #TO DO
-        pass
+        # EC : Liste vide
+        self.emptyListCheck()
+
+        current = self._head
+        nodeToPop = current
+        # EC : 1 seul Node
+        if(self._size == 1):
+            self._head = None
+        
+        # NC
+        else: 
+            self._head = current.next
+
+            for i in range(self._size - 1): 
+                current = current.next
+
+            current.next = nodeToPop.next   # link
+            self._head = nodeToPop.next     # new head
+
+        self._size -= 1
+        return nodeToPop
 
 class Card:
     def __init__(self, r, s):
