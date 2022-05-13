@@ -1,11 +1,4 @@
 # Camille, Divisia, 20119289
-# Prénom, Nom, Matricule
-
-import math
-import random
-import copy
-
-# Camille, Divisia, 20119289
 # Patrick, Lanoie, 20212654
 
 import math
