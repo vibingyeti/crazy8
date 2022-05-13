@@ -165,8 +165,7 @@ class CircularLinkedList(LinkedList):
         return result
 
     def __iter__(self):
-        #TO DO              ????
-        pass
+        return self
 
     # Moves head pointer to next node in list
     def next(self):
@@ -248,9 +247,8 @@ class Card:
         return self._rank + self.suits[self._suit]
 
     def __eq__(self, other):
-        #par defaut, __eq__ c'est ==
-        #TO DO
-        pass
+        if isinstance(other, Card):
+            return self._rank == other._rank #car les ranks sont les memes malgre la couelru
 
 class Hand:
     def __init__(self):
